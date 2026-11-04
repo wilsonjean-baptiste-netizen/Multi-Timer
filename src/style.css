@@ -96,7 +96,8 @@ h2 { display: flex; align-items: center; gap: 9px; margin-bottom: 0; font: 700 2
 .timer-list[data-layout="numpad"] [data-shortcut-number="7"] { grid-area: 1 / 1; }
 .timer-list[data-layout="numpad"] [data-shortcut-number="8"] { grid-area: 1 / 2; }
 .timer-list[data-layout="numpad"] [data-shortcut-number="9"] { grid-area: 1 / 3; }
-.timer-list[data-layout="inline"] { grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr)); }
+.timer-list[data-layout="inline"] { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); grid-template-rows: auto; gap: clamp(3px, .8vw, 8px); }
+.timer-list[data-layout="inline"] .timer-card { container-type: inline-size; container-name: inlinecard; padding: clamp(2px, 1vw, 10px); }
 .timer-card { min-width: 0; padding: 17px 18px 15px; border: 1px solid #e4e9e3; border-radius: 12px; background: rgba(255,255,255,.82); box-shadow: 0 4px 14px #29473205; transition: border-color .18s ease, box-shadow .18s ease, background .18s ease; }
 .timer-card.is-active { border-color: #a9c4af; background: #fbfefb; box-shadow: 0 5px 18px #315e5010; }
 .timer-card-heading { display: flex; min-width: 0; align-items: flex-start; justify-content: space-between; gap: 10px; }
@@ -130,6 +131,34 @@ h2 { display: flex; align-items: center; gap: 9px; margin-bottom: 0; font: 700 2
 .timer-action:focus-visible { outline: 3px solid #8ab5a0; outline-offset: 3px; }
 .timer-list[hidden], .empty-state[hidden], .form-error[hidden] { display: none; }
 
+@container inlinecard {
+  .timer-list[data-layout="inline"] .timer-card .timer-card-heading { gap: clamp(2px, 7cqi, 10px); }
+  .timer-list[data-layout="inline"] .timer-card .timer-card-title { gap: clamp(2px, 7cqi, 8px); }
+  .timer-list[data-layout="inline"] .timer-card .timer-card-title h3 { font-size: clamp(6px, 15cqi, 14px); }
+  .timer-list[data-layout="inline"] .timer-card .timer-status { padding: clamp(1px, 4cqi, 4px) clamp(1px, 7cqi, 7px); font-size: clamp(5px, 10cqi, 9px); }
+  .timer-list[data-layout="inline"] .timer-card .timer-key { min-width: clamp(16px, 30cqi, 28px); height: clamp(16px, 30cqi, 28px); padding: 0 clamp(2px, 6cqi, 6px); font-size: clamp(8px, 15cqi, 13px); }
+  .timer-list[data-layout="inline"] .timer-card .timer-time { margin: clamp(4px, 12cqi, 22px) 0 clamp(4px, 11cqi, 19px); font-size: clamp(5px, 20cqi, 37px); letter-spacing: clamp(-1.4px, -1.5cqi, -.4px); overflow-wrap: anywhere; }
+  .timer-list[data-layout="inline"] .timer-card .timer-details { gap: clamp(2px, 4cqi, 8px) clamp(2px, 6cqi, 12px); margin: clamp(-8px, -5cqi, -3px) 0 clamp(4px, 8cqi, 14px); }
+  .timer-list[data-layout="inline"] .timer-card .timer-rate,
+  .timer-list[data-layout="inline"] .timer-card .double-time-history { font-size: clamp(5px, 8cqi, 10px); }
+  .timer-list[data-layout="inline"] .timer-card .timer-rate { padding: clamp(1px, 3cqi, 4px) clamp(2px, 6cqi, 7px); }
+  .timer-list[data-layout="inline"] .timer-card .double-time-history ul { display: block; }
+  .timer-list[data-layout="inline"] .timer-card .double-time-history li { overflow-wrap: anywhere; }
+  .timer-list[data-layout="inline"] .timer-card .timer-card-actions { flex-wrap: wrap; gap: clamp(2px, 4cqi, 8px); }
+  .timer-list[data-layout="inline"] .timer-card .timer-action { min-height: clamp(16px, 30cqi, 32px); padding-right: clamp(1px, 6cqi, 13px); padding-left: clamp(1px, 6cqi, 13px); font-size: clamp(5px, 10cqi, 10px); }
+  .timer-list[data-layout="inline"] .timer-card .primary-action { min-width: 0; flex: 1 0 100%; }
+  .timer-list[data-layout="inline"] .timer-card .reset-action { flex: 1 1 0; }
+  .timer-list[data-layout="inline"] .timer-card .clear-action { width: clamp(18px, 30cqi, 32px); flex: 0 0 clamp(18px, 30cqi, 32px); font-size: clamp(12px, 20cqi, 19px); }
+}
+
+@container inlinecard (max-width: 55px) {
+  .timer-list[data-layout="inline"] .timer-card .timer-card-heading { flex-direction: column-reverse; align-items: center; }
+  .timer-list[data-layout="inline"] .timer-card .timer-card-title { width: 100%; justify-content: center; }
+  .timer-list[data-layout="inline"] .timer-card .timer-card-title h3 { text-align: center; }
+  .timer-list[data-layout="inline"] .timer-card .timer-status { display: none; }
+  .timer-list[data-layout="inline"] .timer-card .timer-card-actions { gap: 2px; }
+}
+
 .empty-state { display: flex; min-height: 211px; flex-direction: column; align-items: center; justify-content: center; padding: 24px 0 18px; text-align: center; }
 .empty-illustration { position: relative; display: grid; width: 67px; height: 62px; place-items: center; margin-bottom: 12px; }
 .mini-clock { position: relative; width: 43px; height: 43px; border: 1px solid #b9cdbd; border-radius: 50%; background: #edf4ed; box-shadow: 0 4px 12px #54745d14; }
@@ -160,7 +189,7 @@ kbd { display: inline-grid; min-width: 16px; height: 17px; place-items: center; 
   .create-panel { padding: 16px; }
   .timer-list { grid-template-columns: 1fr; padding-top: 13px; }
   .timer-list[data-layout="numpad"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .timer-list[data-layout="inline"] { grid-template-columns: 1fr; }
+  .timer-list[data-layout="inline"] { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 460px) {

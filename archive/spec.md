@@ -52,7 +52,7 @@ A small local web application for creating and displaying multiple named stopwat
   1 2 3
   ```
 
-- Inline layout places the first nine stopwatches from left to right in shortcut order (`1` through `9`) and wraps to additional rows when needed.
+- Inline layout keeps all stopwatches in one horizontal row, left to right in shortcut order. Cards and their contents shrink as needed to fit the available screen width instead of wrapping.
 - Stopwatches after the first nine follow those positions in their existing displayed order in either layout.
 - Changing layouts changes card placement only. It does not reorder stopwatch state, change shortcut assignments, or affect a stopwatch's running state, elapsed time, rate, or interval history.
 - Keep both layouts responsive and readable at desktop and narrow screen sizes. The Numpad arrangement must retain its keypad ordering when it reflows.
