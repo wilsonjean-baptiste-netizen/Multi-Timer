@@ -156,3 +156,18 @@ The browser may contain saved countdown entries under the existing `multi-timer-
 - [ ] Pause or switch stopwatches during 2x, then resume. Confirm the open interval closes and the resumed stopwatch runs at 1x.
 - [ ] Reload during a 2x interval and confirm the rate and ongoing interval continue; reset and delete stopwatches and confirm their interval history clears with them.
 - [ ] Review the cards and interval text at desktop and a narrow phone-sized viewport.
+
+## Stopwatch layout selector - Phase 3
+
+- Added an accessible Numpad/Inline segmented selector above the timer list. The selected layout is saved separately under `multi-timer-layout`; invalid or missing values default to Numpad without changing version 3 stopwatch data.
+- Numpad places shortcuts 7-9 in the first row, 4-6 in the second, and 1-3 in the third. Timers after the first nine follow the keypad. Inline preserves left-to-right shortcut order and wraps responsively.
+- `npm run build` passed. Headless Chrome checks passed at desktop (1100px) and narrow (390px) widths for empty, one, nine, and ten timers; keypad card positions; extra timer placement; Inline order; no horizontal overflow in either layout; separate preference persistence and restoration; invalid preference fallback; timer state preservation; running state reload; and number-key switching after layout changes.
+
+### Hands-on layout acceptance checklist
+
+- [ ] Switch between Numpad and Inline and confirm the selected option is clear.
+- [ ] In Numpad, confirm timer 7 is top-left and timer 1 is bottom-left; confirm timers 10 and later follow the first nine.
+- [ ] In Inline, confirm timers appear left to right in shortcut order and wrap on a narrow screen.
+- [ ] Change layouts while a timer is running and confirm its elapsed time, rate, and intervals do not reset; use number keys to confirm assignments remain unchanged.
+- [ ] Reload in each layout and confirm the selected layout is restored.
+- [ ] Use Tab and Enter/Space to operate the selector and confirm focus remains visible.

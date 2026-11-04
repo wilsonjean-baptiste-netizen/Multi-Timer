@@ -2,7 +2,7 @@
 
 A local desktop-browser app for displaying multiple named stopwatches while allowing only one to run at a time.
 
-> **Implementation status:** Stopwatch state, version 3 persistence, double-time controls, interval display, and the derived total elapsed time are implemented. The production build, deterministic state checks, and headless Chrome desktop/narrow viewport checks passed. Hands-on keyboard and mouse acceptance remains.
+> **Implementation status:** Stopwatch state, version 3 persistence, double-time controls, interval display, selectable Numpad/Inline layouts, and the derived total elapsed time are implemented. Production builds and headless desktop/narrow viewport checks passed; hands-on keyboard and mouse acceptance remains.
 
 ## Requirements
 
@@ -41,6 +41,8 @@ npm run preview
 5. Select the **×** button to delete that stopwatch. Use **Reset all** to zero every stopwatch while preserving the list, or **Clear all** to delete the full list.
 
 The first nine stopwatches can also be controlled with number keys **1–9** from either the main number row or a numpad. Press another stopwatch's number to switch to it; press the active stopwatch's number again to pause it, then again to resume. Shortcuts are ignored while an editable field has focus, so you can type digits in a name. Click or tab out of the field to re-enable shortcuts. Additional stopwatches remain available by mouse.
+
+Use the **Numpad** and **Inline** selector above the stopwatch cards to change their layout. Numpad places stopwatches 7–9 on the top row, 4–6 in the middle, and 1–3 on the bottom, matching a physical keypad. Inline places them left to right in number order and wraps to fit the screen. Stopwatches after number 9 follow the first nine in either layout. Changing the layout does not change stopwatch state or keyboard assignments. Your layout choice is saved separately in this browser and defaults to Numpad when no valid choice is saved.
 
 While a stopwatch is running, press **Space** to switch it between normal speed (1x) and double speed (2x). Space does not start or pause the stopwatch. Its card shows the current rate and lists each double-time interval using stopwatch readings, including an ongoing interval while 2x is active. The double-time shortcut is ignored while typing, when a control has focus, for repeated key events, and when a modifier key is held; focused controls keep their normal Space behavior.
 

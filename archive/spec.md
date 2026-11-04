@@ -41,6 +41,23 @@ A small local web application for creating and displaying multiple named stopwat
 - If the page reloads while a stopwatch is running at `2×`, it remains at `2×` and the open interval continues. Reload at `1×` preserves its normal running state.
 - Ignore Space shortcut handling during key repeat, with modifier keys, while an editable control has focus, or when Space should activate a different focused control. Prevent page scrolling only when the shortcut is handled.
 
+## Stopwatch layouts
+
+- Provide a visible two-option layout selector above the stopwatch list: **Numpad** and **Inline**. Implement it as a segmented pair of buttons with an accessible group name, pressed state for the selected option, and visible keyboard focus.
+- Numpad layout places the first nine stopwatches according to their assigned shortcut numbers in a 3x3 physical-keypad arrangement:
+
+  ```text
+  7 8 9
+  4 5 6
+  1 2 3
+  ```
+
+- Inline layout places the first nine stopwatches from left to right in shortcut order (`1` through `9`) and wraps to additional rows when needed.
+- Stopwatches after the first nine follow those positions in their existing displayed order in either layout.
+- Changing layouts changes card placement only. It does not reorder stopwatch state, change shortcut assignments, or affect a stopwatch's running state, elapsed time, rate, or interval history.
+- Keep both layouts responsive and readable at desktop and narrow screen sizes. The Numpad arrangement must retain its keypad ordering when it reflows.
+- Save the selected layout in a separate local-storage preference key, independent of the version 3 stopwatch data. Default to Numpad when the preference is missing, invalid, or storage is unavailable; layout preferences do not require a stopwatch data version migration.
+
 ## State and timing rules
 
 - Keep one client-side source of truth and enforce that no more than one stopwatch is running.

@@ -73,7 +73,11 @@
         </form>
 
         <p class="setup-note keyboard-help"><kbd>Space</kbd> toggles the running stopwatch between 1× and 2×. Keyboard shortcuts are inactive while using buttons or text fields.</p>
-        <div class="timer-list" id="timer-list" aria-live="off" hidden></div>
+        <div class="layout-picker" role="group" aria-label="Stopwatch layout">
+          <button class="layout-option" type="button" data-layout-choice="numpad" aria-pressed="true">Numpad</button>
+          <button class="layout-option" type="button" data-layout-choice="inline" aria-pressed="false">Inline</button>
+        </div>
+        <div class="timer-list" id="timer-list" data-layout="numpad" aria-live="off" hidden></div>
 
         <div class="empty-state" id="empty-state" aria-live="polite">
           <div class="empty-illustration" aria-hidden="true">

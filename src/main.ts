@@ -10,6 +10,28 @@ const resetAllButton = document.querySelector<HTMLButtonElement>("#reset-all");
 const stopwatchForm = document.querySelector<HTMLFormElement>("#timer-form");
 const labelInput = stopwatchForm?.querySelector<HTMLInputElement>("[name='label']");
 const formError = document.querySelector<HTMLElement>("#form-error");
+const layoutButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-layout-choice]"));
+
+type TimerLayout = "numpad" | "inline";
+const TIMER_LAYOUT_STORAGE_KEY = "multi-timer-layout";
+
+function loadTimerLayout(): TimerLayout {
+  try {
+    return window.localStorage.getItem(TIMER_LAYOUT_STORAGE_KEY) === "inline" ? "inline" : "numpad";
+  } catch {
+    return "numpad";
+  }
+}
+
+function saveTimerLayout(layout: TimerLayout): void {
+  try {
+    window.localStorage.setItem(TIMER_LAYOUT_STORAGE_KEY, layout);
+  } catch {
+    // Keep the selected layout usable for this session when storage is unavailable.
+  }
+}
+
+let timerLayout = loadTimerLayout();
 
 function formatElapsed(elapsedMs: number): string {
   const totalHundredths = Math.floor(Math.max(0, elapsedMs) / 10);
@@ -56,6 +78,7 @@ function sameStopwatchOrder(cards: HTMLElement[], stopwatches: Stopwatch[]): boo
 }
 
 function updateCard(card: HTMLElement, stopwatch: Stopwatch, index: number, activeStopwatchId: string | null): void {
+  card.dataset.shortcutNumber = index < 9 ? String(index + 1) : "extra";
   const isActive = stopwatch.id === activeStopwatchId;
   card.dataset.status = stopwatch.status;
   card.classList.toggle("is-active", isActive);
@@ -110,6 +133,13 @@ function updateCard(card: HTMLElement, stopwatch: Stopwatch, index: number, acti
 
 function render(): void {
   if (!stopwatchList || !emptyState) return;
+  if (stopwatchList.dataset.layout !== timerLayout) stopwatchList.dataset.layout = timerLayout;
+  for (const button of layoutButtons) {
+    const isSelected = button.dataset.layoutChoice === timerLayout;
+    if (button.getAttribute("aria-pressed") !== String(isSelected)) {
+      button.setAttribute("aria-pressed", String(isSelected));
+    }
+  }
   const state = stopwatchState.getState();
   const { stopwatches, activeStopwatchId } = state;
   const cards = Array.from(stopwatchList.querySelectorAll<HTMLElement>(".stopwatch-card"));
@@ -185,6 +215,19 @@ stopwatchList?.addEventListener("click", (event) => {
 
 clearAllButton?.addEventListener("click", () => stopwatchState.clearAll());
 resetAllButton?.addEventListener("click", () => stopwatchState.resetAll());
+
+document.querySelector(".layout-picker")?.addEventListener("click", (event) => {
+  const target = event.target;
+  if (!(target instanceof Element)) return;
+  const button = target.closest<HTMLButtonElement>("button[data-layout-choice]");
+  const selectedLayout = button?.dataset.layoutChoice;
+  if (selectedLayout !== "numpad" && selectedLayout !== "inline") return;
+  if (selectedLayout === timerLayout) return;
+
+  timerLayout = selectedLayout;
+  saveTimerLayout(timerLayout);
+  render();
+});
 
 window.addEventListener("keydown", (event) => {
   if (event.code === "Space") {
