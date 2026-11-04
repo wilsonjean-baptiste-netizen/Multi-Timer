@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A simple local workspace for managing multiple stopwatches."
+    />
+    <meta name="theme-color" content="#f6f7f4" />
+    <title>Multi-Stopwatch</title>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="wordmark" href="./" aria-label="Multi-Stopwatch home">
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span>multi<span class="wordmark-light">stopwatch</span></span>
+        </a>
+        <span class="local-badge"><span class="status-dot"></span>Local workspace</span>
+      </header>
+
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">YOUR FOCUS, AT YOUR PACE</p>
+          <h1 id="page-title">A little more time,<br class="mobile-break" /> in view.</h1>
+          <p class="intro-copy">Keep the stopwatches you need close at hand. Run one at a time, and pick up right where you left off.</p>
+        </div>
+        <div class="time-orbit" aria-hidden="true">
+          <div class="orbit-ring orbit-ring-outer"></div>
+          <div class="orbit-ring orbit-ring-inner"></div>
+          <div class="orbit-center"><span></span></div>
+          <span class="orbit-tick tick-one"></span>
+          <span class="orbit-tick tick-two"></span>
+          <span class="orbit-tick tick-three"></span>
+        </div>
+      </section>
+
+      <section class="timer-workspace" aria-labelledby="timers-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">YOUR WORKSPACE</p>
+            <h2 id="timers-heading">Stopwatches <span class="count-badge" id="timer-count">0</span></h2>
+          </div>
+          <div class="section-actions">
+            <button class="text-button" type="button" id="reset-all" disabled>Reset all</button>
+            <button class="text-button" type="button" id="clear-all" disabled>Clear all</button>
+          </div>
+        </div>
+
+        <div class="total-time-panel" aria-labelledby="total-time-label">
+          <span class="total-time-label" id="total-time-label">Total elapsed time</span>
+          <p class="total-time-value" id="total-time" role="timer" aria-live="off">00:00</p>
+        </div>
+
+        <form class="create-panel" id="timer-form">
+          <div class="form-title-row">
+            <div class="form-icon" aria-hidden="true">+</div>
+            <div>
+              <h3>Add a stopwatch</h3>
+              <p>Name it to keep it in your workspace.</p>
+            </div>
+          </div>
+          <div class="form-fields">
+            <label class="field-label name-field">
+              <span>Stopwatch name</span>
+              <input name="label" type="text" placeholder="e.g. Deep work" autocomplete="off" required maxlength="60" />
+            </label>
+            <button class="add-button" type="submit"><span aria-hidden="true">+</span> Add stopwatch</button>
+          </div>
+          <p class="form-error" id="form-error" role="status" aria-live="polite" hidden></p>
+          <p class="setup-note"><span aria-hidden="true">✦</span> Click out of the name field, then press 1–9 to control the first nine stopwatches. Press the active number again to pause or resume.</p>
+        </form>
+
+        <p class="setup-note keyboard-help"><kbd>Space</kbd> toggles the running stopwatch between 1× and 2×. Keyboard shortcuts are inactive while using buttons or text fields.</p>
+        <div class="timer-list" id="timer-list" aria-live="off" hidden></div>
+
+        <div class="empty-state" id="empty-state" aria-live="polite">
+          <div class="empty-illustration" aria-hidden="true">
+            <div class="mini-clock"><span class="clock-hand clock-hand-hour"></span><span class="clock-hand clock-hand-minute"></span><span class="clock-pin"></span></div>
+            <span class="sparkle sparkle-a">✳</span><span class="sparkle sparkle-b">✦</span>
+          </div>
+          <h3>Your stopwatch space is ready</h3>
+          <p>Your labeled stopwatches will appear here, with only one running at a time.</p>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>Made for the things that matter today.</span>
+        <span class="keyboard-hint"><kbd>1</kbd>–<kbd>9</kbd> <span>start/switch; repeat the active number to pause/resume</span></span>
+      </footer>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
